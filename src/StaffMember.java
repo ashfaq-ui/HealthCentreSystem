@@ -1,12 +1,12 @@
 public abstract class StaffMember{
-//    id, name, surname, dob, contactNo
-    private int id;
+
+    private String id;
     private String name;
     private String surname;
-    private int dob;
-    private int contactNo;
+    private String dob;
+    private String contactNo;
 
-    public StaffMember(int id, String name, String surname, int dob, int contactNo){
+    public StaffMember(String id, String name, String surname, String dob, String contactNo){
         this.id = id;
         this.name= name;
         this.surname= surname;
@@ -15,19 +15,19 @@ public abstract class StaffMember{
 
     }
 
-    public int getContactNo() {
+    public String getContactNo() {
         return contactNo;
     }
 
-    public void setContactNo(int contactNo) {
+    public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
     }
 
-    public int getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(int dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 
@@ -47,17 +47,18 @@ public abstract class StaffMember{
         this.name = name;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
+    @Override
     public String toString(){
-        return "Id: " + this.id + "Name:" + this.name + "surname: " + this.surname + "Dob: " + this.dob + "Contact No: " + this.contactNo ;
+        return "Id: " + this.id + " Name: " + this.name + " Surname: " + this.surname + " Dob: " + this.dob + " Contact No: " + this.contactNo ;
     }
 
-    public abstract void getRole();
+    public abstract String getRole();
 }
