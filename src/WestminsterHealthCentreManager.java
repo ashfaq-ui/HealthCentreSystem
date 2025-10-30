@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class WestminsterHealthCentreManager implements HealthCenterManager{
-    ArrayList<StaffMember> staff = new ArrayList<>();
+    List<StaffMember> staff = new ArrayList<>();
     private int staffLimit;
     Scanner input = new Scanner(System.in);
 
@@ -22,13 +22,14 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
 
     public boolean runMenu(){
 
-        System.out.println("\n1 - Add a new Staff"
-                + "\n2 - View staff"
-                + "\n3 - Remove Staff"
-                + "\n4 - Exit"
+        System.out.println("\n1 - Add New Staff Member"
+                + "\n2 - Remove Staff Member"
+                + "\n3 - View All Staff"
+                + "\n4 - Search Staff by ID"
+                + "\n0 - Exit without Saving"
 
         );
-        System.out.print("Enter here:");
+        System.out.print("Enter your choice:");
         int userInput = input.nextInt();
 
         switch (userInput) {
@@ -36,12 +37,18 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
                 addStaff();
                 return true;
             case 2:
-                viewStaff();
-                return true;
-            case 3:
                 removeStaff();
                 return true;
+            case 3:
+                viewStaff();
+                return true;
+
             case 4:
+                System.out.print("Enter the Id: ");
+                String id = input.next();
+                System.out.println(searchById(id));
+                return true;
+            case 0:
                 return false;
             default:
                 System.out.println("Invalid option. Please try Again.");
@@ -162,4 +169,27 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
 
 
     }
+
+    public StaffMember searchById(String id){
+
+        for(StaffMember findStaff : staff){
+
+            if(findStaff.getId().equals(id)){
+                return findStaff ;
+            }
+        }
+
+        return null;
+
+    }
+
+//    public void sortByName(String name){
+////        4.	Collections.sort(staffList, Comparator.comparing(StaffMember::getSurname)
+//
+//        Collections.sort(staff);
+//
+//
+//
+//    }
+
 }
