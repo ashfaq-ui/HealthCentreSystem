@@ -5,9 +5,6 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
     private int staffLimit;
     Scanner input = new Scanner(System.in);
 
-//    void addStaff();
-//    void viewStaff();
-//    void removeStaff();
 
     public static void main(String[] args) {
 
@@ -22,38 +19,55 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
 
     public boolean runMenu(){
 
-        System.out.println("\n1 - Add New Staff Member"
-                + "\n2 - Remove Staff Member"
-                + "\n3 - View All Staff"
-                + "\n4 - Search Staff by ID"
-                + "\n0 - Exit without Saving"
+        try {
+            System.out.println("\n\t=== Westminster Health Centre Management System ===\n"
+                    + "\n1 - Add New Staff Member"
+                    + "\n2 - Remove Staff Member"
+                    + "\n3 - View All Staff"
+                    + "\n4 - Search Staff by ID"
+                    + "\n5 - Sort Staff by Name"
+                    + "\n0 - Exit without Saving"
 
-        );
-        System.out.print("Enter your choice:");
-        int userInput = input.nextInt();
 
-        switch (userInput) {
-            case 1:
-                addStaff();
-                return true;
-            case 2:
-                removeStaff();
-                return true;
-            case 3:
-                viewStaff();
-                return true;
+            );
+            System.out.print("Enter your choice:");
+            String userInput = input.nextLine();
+            int choise = Integer.parseInt(userInput);
 
-            case 4:
-                System.out.print("Enter the Id: ");
-                String id = input.next();
-                System.out.println(searchById(id));
-                return true;
-            case 0:
-                return false;
-            default:
-                System.out.println("Invalid option. Please try Again.");
-                return true;
+            switch (choise) {
+                case 1:
+                    addStaff();
+                    return true;
+                case 2:
+                    removeStaff();
+                    return true;
+                case 3:
+                    viewStaff();
+                    return true;
+
+                case 4:
+                    System.out.print("Enter the Id: ");
+                    String id = input.next();
+                    System.out.println(searchById(id));
+                    return true;
+
+                case 5:
+                    System.out.println("before sorting");
+                    System.out.println(staff);
+                    sortByName();
+
+                case 0:
+                    return false;
+                default:
+                    System.out.println("Invalid option. Please try Again.");
+                    return true;
+            }
+        } catch(NumberFormatException e){
+            System.out.println("\nError: Invalid input. Please enter a whole number.\n");
+            return true;
         }
+
+
 
 
     }
@@ -62,44 +76,54 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
     public void addStaff(){
 
 
-        System.out.println("\n1 - Add new Doctor" +
-                "\n2 - Add new Receptionist"
+        System.out.println("""
+                
+                1 - Add new Doctor\
+
+                2 - Add new Receptionist"""
         );
         System.out.print("Enter here:");
-        int inputAddStaff = input.nextInt();
+        String inputAddStaff = input.nextLine();
+        int inputAddStaffInt = Integer.parseInt(inputAddStaff);
 
-        switch(inputAddStaff){
+        switch(inputAddStaffInt){
             case 1:
-                System.out.print("Id :");
-                String dId = input.next();
+                try {
+                    System.out.print("Id :");
+                    String dId = input.next();
 
-                System.out.print("Name :");
-                String dName = input.next();
+                    System.out.print("Name :");
+                    String dName = input.next();
 
-                System.out.print("Surname :");
-                String dSurname = input.next();
+                    System.out.print("Surname :");
+                    String dSurname = input.next();
 
-                System.out.print("dob :");
-                String dDob = input.next();
+                    System.out.print("dob :");
+                    String dDob = input.next();
 
-                System.out.print("Contact Number :");
-                String dContactNumber = input.next();
+                    System.out.print("Contact Number :");
+                    String dContactNumber = input.next();
 
-                System.out.print("Licence Number :");
-                String licenceNumber = input.next();
+                    System.out.print("Licence Number :");
+                    String licenceNumber = input.next();
 
-                System.out.print("Specialisation :");
-                String specialisation = input.next();
+                    System.out.print("Specialisation :");
+                    String specialisation = input.next();
 
-                System.out.print("Consultation Per Week :");
-                String consultationPerWeek = input.next();
+                    System.out.print("Consultation Per Week :");
+                    String consultationPerWeek = input.next();
+                    int consultPerWeek = Integer.parseInt(consultationPerWeek);
 
 
-                StaffMember doctor = new Doctor(dId,dName,dSurname,dDob,dContactNumber,licenceNumber,specialisation, consultationPerWeek);
+                    StaffMember doctor = new Doctor(dId, dName, dSurname, dDob, dContactNumber, licenceNumber, specialisation, consultPerWeek);
 
-                staff.add(doctor);
+                    staff.add(doctor);
+                    break;
+                } catch(NumberFormatException e){
+                    System.out.println("Error: Invalid input. Please enter a number (1 or 2).");
+                    addStaff();
+                }
 
-                break;
 
             case 2:
 
@@ -119,10 +143,10 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
                 String rContactNumber = input.next();
 
                 System.out.print("Desk Number :");
-                String deskNumber = input.next();
+                int deskNumber = input.nextInt();
 
                 System.out.print("Hour Per Week :");
-                String hourPerWeek = input.next();
+                int hourPerWeek = input.nextInt();
 
 
 
@@ -183,13 +207,13 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
 
     }
 
-//    public void sortByName(String name){
-////        4.	Collections.sort(staffList, Comparator.comparing(StaffMember::getSurname)
-//
-//        Collections.sort(staff);
-//
-//
-//
-//    }
+    public void sortByName(){
+//        4.	Collections.sort(staffList, Comparator.comparing(StaffMember::getSurname)
+
+        Collections.sort(staff, Comparator.comparing(StaffMember::getSurname)
+                .thenComparing(StaffMember::getName));
+        System.out.println(staff);
+
+    }
 
 }

@@ -2,9 +2,9 @@ public class Doctor extends StaffMember{
 
     private String licenceNumber;
     private String specialisation;
-    private String consultationPerWeek;
+    private int consultationPerWeek;
 
-    public Doctor(String id, String name, String surname, String dob, String contactNo, String licenceNumber, String specialisation, String consultationPerWeek){
+    public Doctor(String id, String name, String surname, String dob, String contactNo, String licenceNumber, String specialisation, int consultationPerWeek){
         super(id, name, surname, dob, contactNo);
 
         this.licenceNumber = licenceNumber;
@@ -32,11 +32,11 @@ public class Doctor extends StaffMember{
         this.specialisation = specialisation;
     }
 
-    public String getConsultationPerWeek() {
+    public int getConsultationPerWeek() {
         return consultationPerWeek;
     }
 
-    public void setConsultationPerWeek(String consultationPerWeek) {
+    public void setConsultationPerWeek(int consultationPerWeek) {
         this.consultationPerWeek = consultationPerWeek;
     }
 

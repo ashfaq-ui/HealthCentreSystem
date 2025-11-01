@@ -1,9 +1,9 @@
 public class Receptionist extends StaffMember{
 
-    private String deskNumber;
-    private String hourPerWeek;
+    private int deskNumber;
+    private int hourPerWeek;
 
-    public Receptionist(String id, String name, String surname, String dob, String contactNo, String deskNumber, String hourPerWeek){
+    public Receptionist(String id, String name, String surname, String dob, String contactNo, int deskNumber, int hourPerWeek){
         super(id, name, surname, dob, contactNo);
 
         this.deskNumber = deskNumber;
@@ -15,19 +15,19 @@ public class Receptionist extends StaffMember{
         return "Doctor";
     }
 
-    public String getDeskNumber() {
+    public int getDeskNumber() {
         return deskNumber;
     }
 
-    public void setDeskNumber(String deskNumber) {
+    public void setDeskNumber(int deskNumber) {
         this.deskNumber = deskNumber;
     }
 
-    public String getHourPerWeek() {
+    public int getHourPerWeek() {
         return hourPerWeek;
     }
 
-    public void setHourPerWeek(String hourPerWeek) {
+    public void setHourPerWeek(int hourPerWeek) {
         this.hourPerWeek = hourPerWeek;
     }
 

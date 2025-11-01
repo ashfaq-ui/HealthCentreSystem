@@ -1,4 +1,4 @@
-public abstract class StaffMember implements Comparable<StaffMember>{
+public abstract class StaffMember{
 
     private String id;
     private String name;
@@ -60,10 +60,7 @@ public abstract class StaffMember implements Comparable<StaffMember>{
         return "Id: " + this.id + " Name: " + this.name + " Surname: " + this.surname + " Dob: " + this.dob + " Contact No: " + this.contactNo ;
     }
 
-    @Override
-    public int compareTo(StaffMember sm){
-        return(this.id.compareTo(sm.id));
-    }
+
 
     public abstract String getRole();
 }
