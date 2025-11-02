@@ -1,4 +1,8 @@
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.*;
+import java.time.*;
 
 public class WestminsterHealthCentreManager implements HealthCenterManager{
     List<StaffMember> staff = new ArrayList<>();
@@ -11,7 +15,6 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
         WestminsterHealthCentreManager manager = new WestminsterHealthCentreManager();
 
         while (manager.runMenu()) {
-            manager.runMenu();
         }
 
         System.out.println("Exiting system. Goodbye!");
@@ -34,6 +37,7 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
             String userInput = input.nextLine();
             int choise = Integer.parseInt(userInput);
 
+
             switch (choise) {
                 case 1:
                     addStaff();
@@ -47,7 +51,7 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
 
                 case 4:
                     System.out.print("Enter the Id: ");
-                    String id = input.next();
+                    String id = input.nextLine();
                     System.out.println(searchById(id));
                     return true;
 
@@ -89,8 +93,30 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
         switch(inputAddStaffInt){
             case 1:
                 try {
-                    System.out.print("Id :");
-                    String dId = input.next();
+                    String dId ;
+                    while(true){
+                        System.out.print("Id :");
+                        dId = input.next();
+
+                        boolean idExits = false;
+
+                        for (int i = 0 ; i < staff.size() ; i++){
+                            if(dId.equals(staff.get(i).getId())){
+                                System.out.println("entered id already exits! try again..");
+                                idExits = true;
+                                break;
+                            }
+
+                        }
+
+
+                        if(!idExits){
+                            break;
+                        }
+
+                    }
+
+
 
                     System.out.print("Name :");
                     String dName = input.next();
@@ -98,8 +124,34 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
                     System.out.print("Surname :");
                     String dSurname = input.next();
 
-                    System.out.print("dob :");
-                    String dDob = input.next();
+                    input.nextLine();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    String requiredFormat = "yyyy-MM-dd";
+
+                    LocalDate validDate = null;
+                    String dDob = "";
+
+                    while (validDate == null) {
+                        System.out.print("Please enter your birth date (e.g., 1995-08-25): ");
+                        String rawInput = input.nextLine(); // Get raw input
+
+
+                        try {
+                            String cleanedInput = rawInput.strip();
+                            validDate = LocalDate.parse(cleanedInput, formatter);
+                            dDob = cleanedInput;
+                            // If it succeeds, this line will run:
+                            System.out.println("Success! That is a valid date: " + validDate);
+
+                        } catch (DateTimeParseException e) {
+                            // 5. If it fails, the user was NOT compliant.
+                            // We catch the error and loop again.
+                            System.out.println("Error: Format is not compliant.");
+                            System.out.println("Please use the exact format: " + requiredFormat);
+                            System.out.println("--------------------------------------");
+                        }
+                    }
+
 
                     System.out.print("Contact Number :");
                     String dContactNumber = input.next();
@@ -110,25 +162,58 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
                     System.out.print("Specialisation :");
                     String specialisation = input.next();
 
-                    System.out.print("Consultation Per Week :");
-                    String consultationPerWeek = input.next();
-                    int consultPerWeek = Integer.parseInt(consultationPerWeek);
+                    int consultPerWeek; // Declare it here so you can use it after the loop
+                    input.nextLine();
+                    while(true) {
+                        System.out.print("Consultation Per Week: ");
+                        String consultationPerWeekStr = input.nextLine(); // Renamed to avoid confusion
 
+                        try {
+                            // Try to convert the string to an int
+                            consultPerWeek = Integer.parseInt(consultationPerWeekStr);
+
+                            // If it succeeds, break out of the loop
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please insert a number. Try again!");
+                        }
+                    }
 
                     StaffMember doctor = new Doctor(dId, dName, dSurname, dDob, dContactNumber, licenceNumber, specialisation, consultPerWeek);
 
                     staff.add(doctor);
                     break;
                 } catch(NumberFormatException e){
-                    System.out.println("Error: Invalid input. Please enter a number (1 or 2).");
+                    System.out.println("Error: Invalid input.");
                     addStaff();
                 }
 
 
             case 2:
 
-                System.out.print("Id :");
-                String rId = input.next();
+
+                String rId ;
+                while(true){
+                    System.out.print("Id :");
+                    rId = input.next();
+
+                    boolean idExits = false;
+
+                    for (int i = 0 ; i < staff.size() ; i++){
+                        if(rId.equals(staff.get(i).getId())){
+                            System.out.println("entered id already exits! try again..");
+                            idExits = true;
+                            break;
+                        }
+
+                    }
+
+
+                    if(!idExits){
+                        break;
+                    }
+
+                }
 
                 System.out.print("Name :");
                 String rName = input.next();
@@ -136,17 +221,68 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
                 System.out.print("Surname :");
                 String rSurname = input.next();
 
-                System.out.print("dob :");
-                String rDob = input.next();
+                input.nextLine();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String requiredFormat = "yyyy-MM-dd";
+
+                LocalDate validDate = null;
+                String rDob = "";
+
+                while (validDate == null) {
+                    System.out.print("Please enter your birth date (e.g., 1995-08-25): ");
+                    String rawInput = input.nextLine(); // Get raw input
+
+
+                    try {
+                        String cleanedInput = rawInput.strip();
+                        validDate = LocalDate.parse(cleanedInput, formatter);
+                        rDob = cleanedInput;
+                        // If it succeeds, this line will run:
+                        System.out.println("Success! That is a valid date: " + validDate);
+
+                    } catch (DateTimeParseException e) {
+                        // 5. If it fails, the user was NOT compliant.
+                        // We catch the error and loop again.
+                        System.out.println("Error: Format is not compliant.");
+                        System.out.println("Please use the exact format: " + requiredFormat);
+                        System.out.println("--------------------------------------");
+                    }
+                }
 
                 System.out.print("Contact Number :");
                 String rContactNumber = input.next();
 
-                System.out.print("Desk Number :");
-                int deskNumber = input.nextInt();
+                int deskNumber;
+                input.nextLine();
+                while(true) {
 
-                System.out.print("Hour Per Week :");
-                int hourPerWeek = input.nextInt();
+                    System.out.print("Desk Number :");
+                    String strDeskNumber = input.nextLine();
+
+                    try{
+                        deskNumber = Integer.parseInt(strDeskNumber);
+                        break;
+                    } catch(NumberFormatException e){
+                        System.out.println("Please enter a number!");
+                    }
+
+                }
+
+                int hourPerWeek ;
+                while(true){
+                    System.out.print("Hour Per Week :");
+                    String strHourPerWeek = input.nextLine();
+
+                    try{
+                        hourPerWeek = Integer.parseInt(strHourPerWeek);
+                        break;
+                    } catch(NumberFormatException e){
+                        System.out.println("Please enter a number");
+                    }
+                }
+
+
+
 
 
 
@@ -169,7 +305,7 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
     @Override
     public void removeStaff(){
         System.out.print("Enter the ID of the staff to remove: ");
-        String idToRemove = input.next();
+        String idToRemove = input.nextLine();
 
         int indexToRemove = -1;
         StaffMember staffToRemove = null;
@@ -186,6 +322,7 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
             staff.remove(indexToRemove);
             System.out.println("Successfully removed staff member.");
             System.out.print(staffToRemove + "\n");
+            input.nextLine();
         } else {
             System.out.println("Error: Staff member with ID " + idToRemove + " not found.");
         }
