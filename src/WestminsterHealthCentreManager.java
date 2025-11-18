@@ -5,7 +5,7 @@ import java.util.*;
 import java.time.*;
 
 public class WestminsterHealthCentreManager implements HealthCenterManager{
-    List<StaffMember> staff = new ArrayList<>();
+    ArrayList<StaffMember> staff = new ArrayList<>();
     private int staffLimit;
     Scanner input = new Scanner(System.in);
 
@@ -29,6 +29,7 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
                     + "\n3 - View All Staff"
                     + "\n4 - Search Staff by ID"
                     + "\n5 - Sort Staff by Name"
+                    + "\n6 - GUI Interface"
                     + "\n0 - Exit without Saving"
 
 
@@ -60,6 +61,8 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
                     System.out.println(staff);
                     sortByName();
 
+                case 6:
+                    guiInterFace();
                 case 0:
                     return false;
                 default:
@@ -351,6 +354,10 @@ public class WestminsterHealthCentreManager implements HealthCenterManager{
                 .thenComparing(StaffMember::getName));
         System.out.println(staff);
 
+    }
+
+    public void guiInterFace(){
+        StaffManagementGUI gui = new StaffManagementGUI(staff);
     }
 
 }
